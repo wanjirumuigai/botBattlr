@@ -1,13 +1,25 @@
-import React from "react";
+import React, {useState, useEffect}from "react";
+import BotCard from "./BotCard";
 
-function BotCollection() {
-  // Your code here
+const url = "http://localhost:8002/bots"
+function BotCollection({collection, handleAddArmy,deleteBot}) {
+
+  
   return (
     <div className="ui four column grid">
       <div className="row">
-        {/*...and here..*/}
-        Collection of all bots
+      
+      {collection.map ((item) => {
+          return (
+            <BotCard bot={item} 
+            addArmy={handleAddArmy} 
+            deleteBot={deleteBot} />
+          )
+        })}
+       
+        
       </div>
+      
     </div>
   );
 }
