@@ -9,17 +9,25 @@ const botTypeClasses = {
   Witch: "icon magic",
   Captain: "icon star",
 };
+const url = "http://localhost:8002/bots"
 
 function BotCard({ bot, addArmy, deleteBot}) {
+  //remove bot from the army
   function handleClickBot(bot, e) {
     if(e.target.parentNode.className === "image") {
       addArmy(bot)
     }
     
   }
+//permanently delete a bot
 function handleDeleteBot(bot) {
-  deleteBot(bot)
-}
+    fetch(`${url}/${bot.id}`, {
+    method: "DELETE"
+
+  })
+  .then(res => res.json())
+  .then(() => deleteBot(bot.id) )
+  }
  
   return (
     <div className="ui column">
@@ -28,6 +36,7 @@ function handleDeleteBot(bot) {
         key={bot.id}
         onClick={(e) => handleClickBot(bot, e)}
       >
+        
         <div className="image">
           <img alt="oh no!" src={bot.avatar_url} />
         </div>

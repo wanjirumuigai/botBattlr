@@ -5,10 +5,11 @@ import BotCollection from "./BotCollection";
 
 const url = "http://localhost:8002/bots"
 function BotsPage() {
-  //start here with your code for step one
+  //use state to create the 2 armies; your army & bot collection, and the functions to update them
   const [botObject, setBotObject] = useState([])
   const [army, setArmy] = useState([])
 
+//use effect to fetch data from the API
   useEffect(() => {
     fetch(url)
     .then(res => res.json())
@@ -17,6 +18,8 @@ function BotsPage() {
         setBotObject(data)
       
       )}, [])
+
+  //add a bot to the army - checks if the bot is already on the army or not
 function handleAddArmy(bot){
   if(army.includes(bot)) {
     return null
@@ -25,6 +28,8 @@ function handleAddArmy(bot){
         setArmy(newArmy)
   }     
 }
+
+//remove a bot from the army when you click on it
 function removeBotFromArmy(e) {
   const deleteArmy = army.filter((item) => {
   if(item.avatar_url !== e.target.src) {
@@ -36,19 +41,14 @@ function removeBotFromArmy(e) {
   setArmy(deleteArmy)
   
 }
-function deleteBotPerm(id) {
-  const updatedBots = botObject.filter(bot => bot.id !== id)
-  setBotObject(updatedBots)
-}
-
-function deletePerm(bot){
-  
-  fetch(`${url}/${bot.id}`, {
-    method: "DELETE"
-
-  })
-  deleteBotPerm(bot.id)  
+//delete a bot permanently even from the database
+  function deletePerm(id){
+    const updatedBots = botObject.filter(bot => bot.id !== id)
+    setBotObject(updatedBots)
+    const updatedBotsArmy = army.filter(bot => bot.id !== id)
+    setArmy(updatedBotsArmy)   
     }
+
 
   return (
     <div>

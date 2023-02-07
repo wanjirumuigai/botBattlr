@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import BotCard from "./BotCard";
 
-function YourBotArmy({armyArray, handleAddArmy, handleRemoval}) {
+function YourBotArmy({armyArray, handleAddArmy, handleRemoval,deleteBot}) {
   
   
   //your bot army code here...
@@ -17,7 +17,9 @@ function deleteArmy(e){
           {/*...and here...*/}
           {armyArray.map((item) => {
             return (
-              <BotCard bot={item} addArmy={handleAddArmy} />
+              <BotCard bot={item} 
+              addArmy={handleAddArmy} 
+              deleteBot={deleteBot}/>
             )
           }          
           )}          
